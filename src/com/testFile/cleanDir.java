@@ -8,18 +8,23 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class cleanDir {
     public static void main(String[] args) {
         String path = "H:\\备份 温浩然\\G\\F盘";
         String aimPath = "H:\\备份 温浩然\\G\\F盘";
-        String deletePath = "H:\\备份 温浩然\\G\\F盘\\deleteDir";
+        String deletePath = "H:\\备份 温浩然\\G\\F盘\\xfmovie";
         File file = new File(path);
         Map<String, String> extMap = new HashMap<>();
         extMap.put("avi", "avi");
+        extMap.put("AVI", "AVI");
         extMap.put("mkv", "mkv");
+        extMap.put("MKV", "MKV");
         extMap.put("mp4", "mp4");
+        extMap.put("MP4", "MP4");
         extMap.put("wmv", "wmv");
+        extMap.put("WMV", "WMV");
         extMap.put("rmvb", "rmvb");
         extMap.put("torrent", "torrent");
         func(file, aimPath, deletePath, extMap);
@@ -81,26 +86,20 @@ public class cleanDir {
         if (extMap == null || string == null) {
             return false;
         }
-        if (extMap.containsKey(string)) {
-            return true;
-        }
-        return false;
+        return extMap.containsKey(string);
     }
 
     private static boolean findEmptyDir(File file) {
         if (!file.isDirectory()) {
             return false;
         }
-        if (file.listFiles().length == 0) {
-            return true;
-        }
-        return false;
+        return Objects.requireNonNull(file.listFiles()).length == 0;
     }
 
     private static int getFileNum(File file) {
         if (!file.isDirectory()) {
             return 0;
         }
-        return file.listFiles().length;
+        return Objects.requireNonNull(file.listFiles()).length;
     }
 }
